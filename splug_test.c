@@ -1,10 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+
+typedef struct info{
+	char name[20];
+	char address[40];
+	char phone[15];
+	struct info *next;
+}info;
+
 void print_main(void);
+info* load_data(FILE *fp);
 
 int main(void){
 	while(1){
 		int select;
+		FILE *fp=fopen("명단.txt","r");
+		info *user=load_data(fp);
 		print_main();
 		printf("선택 : ");
 		scanf("%d",&select);
@@ -22,19 +34,9 @@ int main(void){
 			case(6):
 				return 0;
 				break;
-
-
-
 		}
 
-
-
-
-
-
 	}
-
-
 }
 
 void print_main(void){
@@ -48,5 +50,14 @@ void print_main(void){
 	printf("5. 회원 삭제\n");
 	printf("6. 프로그램 종료\n");
 	return ;
+}
 
+info* load_data(FILE *fp){
+	info *head=(info *)malloc(sizeof(info));
+	if (fscanf(fp,"%s %s %s",head->name,head->address,head->phone)==EOF){
+		free(head);
+		return NULL;
+	}
+	head->next=load_data(fp);
+	return head;
 }
