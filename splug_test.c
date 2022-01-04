@@ -11,6 +11,7 @@ typedef struct info{
 
 void print_main(void);
 info* load_data(FILE *fp);
+void print_user(info *user);
 
 int main(void){
 	while(1){
@@ -22,6 +23,7 @@ int main(void){
 		scanf("%d",&select);
 		switch(select){
 			case(1):
+				print_user(user);
 				break;
 			case(2):
 				break;
@@ -41,7 +43,7 @@ int main(void){
 
 void print_main(void){
 
-	system("clear");
+	//system("clear");
 	printf("        ==메뉴==\n");
 	printf("1. 모든 주소록 정보 출력\n");
 	printf("2. 회원 등록\n");
@@ -61,3 +63,32 @@ info* load_data(FILE *fp){
 	head->next=load_data(fp);
 	return head;
 }
+
+void print_user(info* user){
+
+	for(info *search=user;search!=NULL;search=search->next){
+		printf("%s %s %s\n",search->name,search->address,search->phone);
+	}
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
