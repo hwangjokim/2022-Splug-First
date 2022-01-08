@@ -13,16 +13,15 @@ void print_main(void);
 info* load_data(FILE *fp);
 void print_user(info *user);
 void search_user(info *user); 
-
+void delete_user(info *user);
 int main(void){
 	print_main();
 	printf("=======================\n");
+	FILE *fp=fopen("명단.txt","r");
+	info *user=load_data(fp);
 	while(1){
 		int select;
-		FILE *fp=fopen("명단.txt","r");
-		info *user=load_data(fp);
 		//sorting_node(user);
-
 		printf("선택 : ");
 
 		scanf("%d",&select);
@@ -41,6 +40,7 @@ int main(void){
 			case(4):
 				break;
 			case(5):
+				delete_user(user);
 				break;
 			case(6):
 				return 0;
@@ -104,9 +104,34 @@ void search_user(info* user){
 	}
 	printf("찾는 회원은 존재하지 않습니다.\n");
 
+}
+
+void delete_user(info* user){
+	char search_name[30];
+	printf("삭제할 회원의 이름을 입력하세요 : ");
+	scanf("%s",search_name);
+
+	while (user->next!=NULL){
+		if (!strcmp(search_name,user->next->name)){
+			printf("경고 : 정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다. [Y/N] : ");
+			while(getchar()!='\n');
+			char select;
+			scanf("%c",&select);
+			if (select==89 || select==121){
+				info *temp=user->next->next;
+				free(user->next);
+				user->next=temp;
+				printf("삭제가 완료되었습니다. \n");
+				return ;
+			}
 
 
+		}
+		user=user->next;
 
+
+	}
+	printf("존재하지 않는 회원입니다.\n");
 
 }
 
