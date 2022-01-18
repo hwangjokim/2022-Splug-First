@@ -1,3 +1,5 @@
+/* 2022 SPLUG 2월 재학생 대상 정회원 심사 예시 코드 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +16,7 @@ info* load_data(FILE *fp);
 void print_user(info *user);
 void search_user(info *user); 
 void delete_user(info *user);
+void sorting_node(info *user);
 int main(void){
 	print_main();
 	printf("=======================\n");
@@ -21,7 +24,7 @@ int main(void){
 	info *user=load_data(fp);
 	while(1){
 		int select;
-		//sorting_node(user);
+		sorting_node(user);
 		printf("선택 : ");
 
 		scanf("%d",&select);
@@ -72,16 +75,30 @@ info* load_data(FILE *fp){
 	head->next=load_data(fp);
 	return head;
 }
-/*
-   void sorting_node(info *user){	
+
+   void sorting_node(info *user){	 //내림차 
    info *temp=(info *)malloc(sizeof(info));
+   info *seek2=(info *)malloc(sizeof(info));
+   info *seek=(info *)malloc(sizeof(info));
    info *head=user;
+   for(seek2->next=user;seek2->next->next!=NULL;seek2=seek2->next){
+   for(seek=seek2;seek->next->next!=NULL;seek=seek->next){
+   if(strcmp(seek->next->name,seek->next->next->name)<0){
+   temp->next=seek->next->next;
+   seek->next->next=temp->next->next;
+   temp->next->next=seek->next;
+   seek->next=temp->next;
+   }
+   }
+}
+ 
+ 
 
 
 
 
    }
-   */
+   
 void print_user(info* user){
 	for(info *search=user;search!=NULL;search=search->next){
 		printf("%s %s %s\n",search->name,search->address,search->phone);
