@@ -87,28 +87,28 @@ info* load_data(FILE *fp){
 	return head;
 }
 
-   void sorting_node(info *user){	 //내림차 
-   info *temp=(info *)malloc(sizeof(info));
-   info *seek2=(info *)malloc(sizeof(info));
-   info *seek=(info *)malloc(sizeof(info));
-   info *head=user;
-   for(seek2->next=user;seek2->next->next!=NULL;seek2=seek2->next){
-   for(seek=seek2;seek->next->next!=NULL;seek=seek->next){
-   if(strcmp(seek->next->name,seek->next->next->name)>0){
-   temp->next=seek->next->next;
-   seek->next->next=temp->next->next;
-   temp->next->next=seek->next;
-   seek->next=temp->next;
-   }
-   }
+void sorting_node(info *user){	 //내림차 
+	info *temp=(info *)malloc(sizeof(info));
+	info *seek2=(info *)malloc(sizeof(info));
+	info *seek=(info *)malloc(sizeof(info));
+	info *head=user;
+	for(seek2->next=user;seek2->next->next!=NULL;seek2=seek2->next){
+		for(seek=seek2;seek->next->next!=NULL;seek=seek->next){
+			if(strcmp(seek->next->name,seek->next->next->name)>0){
+				temp->next=seek->next->next;
+				seek->next->next=temp->next->next;
+				temp->next->next=seek->next;
+				seek->next=temp->next;
+			}
+		}
+	}
+
+
+
+
+
 }
- 
 
-
-
-
-   }
-   
 void print_user(info* user){
 	for(info *search=user;search!=NULL;search=search->next){
 		printf("%s %s %s\n",search->name,search->address,search->phone);
@@ -155,17 +155,17 @@ void edit_user(info* user){
 	printf("정보를 변경하고자 하는 회원의 이름을 입력하세요 : ");
 	scanf("%s",search);
 	while(user!=NULL){
-	if(strcmp(search,user->name)==0){
-	printf("%s 회원의 변경할 이름을 입력하세요 : ",search);
-	scanf("%s",user->name);
-	printf("변경할 주소를 입력하세요 : ");
-	scanf("%s",user->address);
-	printf("변경할 전화번호를 입력하세요 : ");
-	scanf("%s",user->phone);
-	printf("정상적으로 변경되었습니다.\n");
-	return ;
-	}
-	user=user->next;
+		if(strcmp(search,user->name)==0){
+			printf("%s 회원의 변경할 이름을 입력하세요 : ",search);
+			scanf("%s",user->name);
+			printf("변경할 주소를 입력하세요 : ");
+			scanf("%s",user->address);
+			printf("변경할 전화번호를 입력하세요 : ");
+			scanf("%s",user->phone);
+			printf("정상적으로 변경되었습니다.\n");
+			return ;
+		}
+		user=user->next;
 	}
 	printf("찾는 회원이 존재하지 않습니다.\n");
 	return ;
@@ -187,15 +187,15 @@ void delete_user(info* user){
 			if (select==89 || select==121){
 				if(!strcmp(search_name,user->name)) user=user->next;
 				else{
-				info *temp=seek->next->next;
-				free(seek->next);
-				seek->next=temp;
+					info *temp=seek->next->next;
+					free(seek->next);
+					seek->next=temp;
 				}
 				printf("삭제가 완료되었습니다. \n");
 				return ;
 			}
 			else{
-			return;
+				return;
 			}
 
 
@@ -210,13 +210,13 @@ void delete_user(info* user){
 
 
 void exit_prog(info *user){
-FILE *fp=fopen("명단.txt","w");
-while(user!=NULL){
-fprintf(fp,"%s %s %s\n",user->name,user->address,user->phone);
-user=user->next;
-}
-fclose(fp);
-return ;
+	FILE *fp=fopen("명단.txt","w");
+	while(user!=NULL){
+		fprintf(fp,"%s %s %s\n",user->name,user->address,user->phone);
+		user=user->next;
+	}
+	fclose(fp);
+	return ;
 }
 
 
